@@ -1,0 +1,88 @@
+<div class="wrapper-home d-flex justify-content-center align-items-center mt-3">
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-md-7">
+                <img src="../assets/icons/car.svg" alt="" appScrollAnimation>
+                <h1 class="title">Rent the vehicle you need at the lowest price</h1>
+                <h3 class="subtitle">
+                    With TravelCar, you can rent hundreds of cars in various options in the easiest way
+                </h3>
+            </div>
+            <div class="col-md-5 mt-3 search-wrapper d-flex justify-content-center align-items-center">
+                <div class="row p-4">
+                    <div class="col-md-12">
+                        <h5 appScrollAnimation>Fast rental in 4 steps</h5>
+                        <img src="../assets/home-car2.svg" width="300" alt="">
+                    </div>
+                    <div class="col-md-12">
+                        <p-timeline [value]="events1" layout="horizontal" 
+                            styleClass="customized-timeline">
+                            <ng-template pTemplate="marker" let-event>
+                                <span class="custom-marker p-shadow-2" [style.backgroundColor]="event.color">
+                                    <i [ngClass]="event.icon"></i>
+                                </span>
+                            </ng-template>
+                            <ng-template pTemplate="content" let-event>
+                                {{event.status}}
+                            </ng-template>
+                        </p-timeline>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <div class="d-flex align-items-center justify-content-center rent-fast">
+                            <a routerLink="/cars">Rent Now</a> <i class="pi pi-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <p-carousel [value]="cars" [autoplayInterval]="5000" [circular]="true" [numVisible]="3">
+                <ng-template pTemplate="header">
+                    <h2 class="text-center mb-4">Our Fleet</h2>
+                    <hr>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div role="button" class="card ml-3 mr-3 p-3">
+                        <img src="https://localhost:44383/{{imageFilter(car.id)}}" width="250" height="150">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{car.brandName}} {{car.carName}}</h5>
+                            <div class="row text-center">
+                                <div class="col-md-6">
+                                    <h5 class="card-title price-title mt-3">Price
+                                        <div class="dailyprice">{{car.dailyPrice}}₺</div>
+                                    </h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="card-title findeks-title mt-3">Findeks
+                                        <div class="findex">
+                                            <i class="pi pi-star mr-1"></i> {{car.findexScore}}
+                                        </div>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div routerLink="/car/detail/{{car.id}}/{{car.carPropertyId}}"
+                                        class="p-button-success rental-car d-flex align-items-center justify-content-center">
+                                        Rent This Car Now
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </div>
+    </div>
+</div>
+
+<div class="wave">
+    <img src="../assets/wave.svg" alt="">
+</div>
+
+<app-footer></app-footer>

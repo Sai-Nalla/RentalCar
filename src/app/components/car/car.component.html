@@ -1,0 +1,105 @@
+<app-status></app-status>
+<div class="container">
+    <div class="row mt-5">
+        <!-- Sidebar / Filters -->
+        <div class="col-md-4">
+            <p-fieldset>
+                <ng-template pTemplate="header">
+                    <i style="font-size:20px;" class="float-right pi pi-trash" role="button" routerLink="/cars"
+                        (click)="filterReset()"></i>
+                    <h5> <i style="font-size:18px;" class="pi pi-filter"></i> Filter Results</h5>
+                </ng-template>
+
+                <p-accordion [multiple]="true">
+                    <p-accordionTab header="Price Range">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <p-slider [(ngModel)]="rangeValues" [range]="true" [animate]="true" [min]="0"
+                                    [max]="1500"></p-slider>
+                                <span class="mt-2 float-left">{{rangeValues[0]}}</span>
+                                <span class="mt-2 float-right">{{rangeValues[1]}}</span>
+                            </li>
+                        </ul>
+                    </p-accordionTab>
+                </p-accordion>
+
+                <app-price></app-price>
+                <app-brand [(filterBrand)]="filterBrand"></app-brand>
+                <app-color [(filterColor)]="filterColor"></app-color>
+            </p-fieldset>
+        </div>
+
+        <!-- Main Content / Car List -->
+        <div class="col-md-8">
+            <app-filter-menu [(filterText)]="filterText"></app-filter-menu>
+
+            <p-dataView
+                [value]="cars | filterPipe:filterText | colorFilter:filterColor | brandFilter:filterBrand | priceFilter:rangeValues[0]:rangeValues[1]"
+                [paginator]="true" [rows]="5" styleClass="dataview-wrapper">
+                
+                <ng-template let-car pTemplate="listItem">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-12 p-4">
+                            <div class="col-md-12 d-flex align-items-center">
+                                <div class="row" style="min-width:300px;max-width:300px;">
+                                    <div class="col-md-8">
+                                        <span class="car-name">{{car.carName}}</span>
+                                        <span class="car-brand">{{car.brandName}}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span class="findex-score ml-4 d-flex align-items-center justify-content-center">
+                                            <i class="pi pi-star mr-1"></i> {{car.findexScore}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Left: Image & Properties -->
+                                <div class="col-md-6 text-center p-2">
+                                    <img width="200" height="130" src="https://localhost:44383/{{imageFilter(car.id)}}" [alt]="car.carName" />
+                                    <div class="row text-center p-3">
+                                        <div class="col-md-6">
+                                            <div class="d-flex justify-content-center align-items-center car-property">
+                                                <i style="font-size:20px;" class="pi pi-palette text-white mr-2"></i>
+                                                {{car.colorName}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-flex justify-content-center align-items-center car-property">
+                                                <i class="pi pi-tags mr-2"></i> {{car.modelYear}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right: Pricing & Rent Button -->
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="car-price"><b>Required Findeks Score:</b> {{car.findexScore}}</div>
+                                            <div class="car-price"><b>Daily Price:</b> {{car.dailyPrice}}₺</div>
+                                            <div class="car-price"><b>Daily Price (Including VAT):</b>
+                                                {{car.dailyPrice | vatAdded:0.20}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col-md-12 d-flex align-items-end">
+                                            <div role="button" [routerLink]="['/car/detail/',car.id,car.carPropertyId]"
+                                                class="rental-car d-flex align-items-center justify-content-center">
+                                                Rent Now
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

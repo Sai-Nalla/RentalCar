@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row border d-flex align-items-center justify-content-center" style="min-height:90px;">
+        <div class="col-md-6">
+            <div class="input-group mt-2">
+                <label class="form-control btn-danger">Search Car</label>
+                <input type="text" [(ngModel)]="filterText" (ngModelChange)="change($event)" placeholder="E.g.: Egea, Dacia"
+                class="form-control">
+            </div>
+            <h6 *ngIf="filterText" class="mt-2">Searched keyword:
+                <span class="text-danger">
+                    {{filterText}}
+                </span>
+            </h6>
+        </div>
+        <div class="col-md-6 text-center">
+            <div class="car-price text-success"> <i class="pi pi-star"></i> Your Findeks Score: <b>{{userFindexScore}}</b> </div>
+        </div>
+    </div>
+</div>

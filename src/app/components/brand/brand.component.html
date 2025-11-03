@@ -1,0 +1,25 @@
+<p-accordion [multiple]="true">
+  <p-accordionTab header="Car Brand">
+    <!-- Search Input -->
+    <input 
+      placeholder="Search Brand" 
+      type="text" 
+      class="form-control" 
+      [(ngModel)]="filterBrand" 
+      (ngModelChange)="change($event)"
+    >
+
+    <h5 class="salary-title text-center mt-2 mb-2">or select from the list</h5>
+
+    <!-- Brand Select Dropdown -->
+    <select 
+      class="custom-select" 
+      (click)="navigateTo($event.target)" 
+      (change)="navigateTo($event.target)"
+    >
+      <option *ngFor="let brand of brands; index as i" [value]="brand.brandId">
+        {{ i + 1 }}-) {{ brand.brandName }}
+      </option>
+    </select>
+  </p-accordionTab>
+</p-accordion>

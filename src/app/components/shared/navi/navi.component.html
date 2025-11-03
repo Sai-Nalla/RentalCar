@@ -1,0 +1,72 @@
+<div class="container-fluid mb-3">
+  
+  <header class="row pt-2">
+    <!-- logo -->
+    <div class="col-md-2 d-flex justify-content-center align-items-center">
+      <a routerLink="/" class="logo ml-4">
+        <span><b>Travel</b> <span style="color:#333;">Car</span></span>
+      </a>
+    </div>
+
+    <!-- header menu -->
+    <div class="col-md-4 d-flex justify-content-center align-items-center header-menu mt-3">
+      <a class="mr-4" routerLink="/cars">
+        <span>
+          <img src="../assets/icons/navi-car.svg" width="30" height="30" alt=""> Rental Cars
+        </span>
+      </a>
+      <a href="#">
+        <span>
+          <img src="../assets/icons/navi-calendar.svg" width="30" height="30" alt=""> Check Reservation
+        </span>
+      </a>
+    </div>
+      
+    <!-- login / register -->
+    <div class="col-md-3 d-flex justify-content-center align-items-center header-menu mt-3" *ngIf="!loggedIn">
+      <a routerLink="/login">
+        <span>
+          Log In
+        </span>
+      </a>
+      <span class="login-or">or</span>
+      <span>
+        <button pButton type="button" label="Register" class="p-button-danger" routerLink="/register"></button>
+      </span>
+    </div>
+
+    <!-- user dropdown -->
+    <div class="col-md-3 d-flex justify-content-center align-items-center header-menu mt-3" *ngIf="loggedIn">
+      <button type="button" class="btn dropdown-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        <p *ngFor="let user of users">
+          <i class="pi pi-user"></i> Welcome {{user.firstName}} {{user.lastName}}
+        </p>
+      </button>
+      <div class="dropdown-menu text-center">
+        <a class="dropdown-item" routerLink="/admin/user-edit">
+          <i class="pi pi-user-edit"></i> User Panel
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="logout()">
+          <i class="pi pi-sign-out"></i> Log Out
+        </a>
+      </div>
+    </div>
+
+    <!-- support -->
+    <div class="col-md-3 d-none d-md-block mt-3">
+      <a class="mr-4 d-flex align-items-center justify-content-center" href="">
+        <span>
+          <div id="support-icon">
+            <img src="../assets/icons/support.svg" class="m-1" width="40">
+          </div>
+        </span>
+        <div class="support-wrapper">
+          <h4>Support Line</h4>
+          <h3>+90 555 555 55 55</h3>
+        </div>
+      </a>
+    </div>
+  </header>
+</div>

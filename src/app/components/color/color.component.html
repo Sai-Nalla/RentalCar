@@ -1,0 +1,11 @@
+<p-accordion [multiple]="true">
+  <p-accordionTab header="Color">
+    <input placeholder="Search Color" type="text" class="form-control" [(ngModel)]="filterColor" (ngModelChange)="change($event)">
+    <h5 class="salary-title text-center mt-2 mb-2">or select</h5>
+    <select class="custom-select" (click)="navigateTo($event.target)" (change)="navigateTo($event.target)">
+      <option *ngFor="let color of colors; index as i;" value="{{color.colorId}}">
+        {{i + 1}}-) {{color.colorName}}
+      </option>
+    </select>
+  </p-accordionTab>
+</p-accordion>

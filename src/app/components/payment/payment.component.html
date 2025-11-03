@@ -1,0 +1,152 @@
+<app-status></app-status>
+<app-steps></app-steps>
+
+<div class="container-fluid mt-5">
+    <p-toast position="top-right"></p-toast>
+    <p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+        <ng-template let-message pTemplate="message">
+            <div class="p-flex p-flex-column" style="flex: 1">
+                <div class="p-text-center">
+                    <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                    <h4>{{message.summary}}</h4>
+                    <p>{{message.detail}}</p>
+                </div>
+                <div class="p-grid p-fluid">
+                    <div class="p-col-6">
+                        <button type="button" pButton (click)="onConfirm()" label="Yes"
+                            class="p-button-success"></button>
+                    </div>
+                    <div class="p-col-6 mt-3">
+                        <button type="button" pButton (click)="onReject()" label="No"
+                            class="p-button-secondary"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-toast>
+
+    <div class="row">
+        <div class="col-md-8 border">
+            <button class="btn btn-outline-danger mt-3 mb-5" onclick="history.back()">Go Back</button>
+            <h5>Credit Card Information</h5>
+            <div class="row d-flex justify-content-center p-4">
+                <!-- inputs -->
+                <form #creditCardForm="ngForm" (ngSubmit)="onSubmit(creditCardForm.value)">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card-input-title mb-3"> First Name </div>
+                            <div>
+                                <input class="form-control" type="text" name="customerName" [(ngModel)]="customerName">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card-input-title mb-3"> Last Name </div>
+                            <div>
+                                <input class="form-control" type="text" name="customerSurname" [(ngModel)]="customerSurname">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-input-title mb-3"> Card Number </div>
+                            <div>
+                                <input class="form-control" type="text" maxlength="16" name="cardNumber" [(ngModel)]="cardNumber">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mt-4">
+                            <div class="card-input-title mb-3"> Expiration Date </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <select name="expirationMonth" id="month" class="form-control" [(ngModel)]="expirationMonth">
+                                        <option *ngFor="let month of months" [value]="month">{{month}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <select name="expirationYear" id="year" class="form-control" [(ngModel)]="expirationYear">
+                                        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mt-4">
+                            <div class="card-input-title mb-3"> CVV </div>
+                            <div>
+                                <input class="form-control" type="text" name="cvv" [(ngModel)]="cvv">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-center mt-4">
+                            <button class="btn btn-red">Complete Payment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-4 p-3 border">
+            <h5>Card Preview</h5>
+            <hr>
+            <div class="col-md-12 p-4 border credit-card-wrapper">
+                <div class="credit-card-inner">
+                    <div class="credit-card-front">
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-md-2 ml-2 card-chip"></div>
+                            <div class="col-md-2 card-type"></div>
+                        </div>
+                        <div class="row d-flex justify-content-center mt-5 mb-4">
+                            <div class="col-md-12">
+                                <h5 class="text-center card-number">{{cardNumber | creditCard}}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 text-left">
+                                <h5 class="card-name mt-3">{{customerName | uppercase}} {{customerSurname | uppercase}}</h5>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <h5 class="card-expiration"><span>VALID THRU</span></h5>
+                                <h5 class="card-expiration">{{expirationMonth}} / {{expirationYear}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="credit-card-back">
+                        <div class="row">
+                            <div class="col-md-12 mb-5 card-stripe"></div>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-12">
+                                <h5 class="cvv-title text-right">CVV</h5>
+                                <div class="cvv-stripe text-right p-2">{{cvv}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 mt-3">
+                <div class="saved-cards p-3">
+                    <h6 class="text-center">Saved Cards</h6>
+                </div>
+                <div class="saved-card" *ngIf="userCards" (click)="showCardDetail()">
+                    <h6 class="saved-card-number mt-3 p-3" *ngFor="let userCard of userCards">
+                        <img src="../assets/icons/credit-card.svg" width="25">
+                        Your card ending with {{userCard.cardNumber | creditCard}}
+                        <div class="card-detail mt-3 d-flex justify-content-between" *ngIf="showDetail">
+                            <div><span class="text-success">EXP</span>: {{userCard.expirationMonth}} / {{userCard.expirationYear}}</div>
+                            <div><span class="text-success">CVV</span>: {{userCard.cvv}}</div>
+                        </div>
+                    </h6>
+                </div>
+
+                <div class="saved-card" *ngIf="userCards.length === 0">
+                    <h6 class="text-center saved-card-number mt-3 p-3">
+                        <img src="../assets/icons/credit-card.svg" width="25">
+                        No saved cards
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,38 @@
+<div class="row border mb-4">
+    <div class="col-md-12 p-4">
+        <h5>Rental Terms</h5>
+        <hr>
+        <div class="row d-flex justify-content-around" *ngFor="let term of rentalTerms">
+            <div class="col-md-3 text-center border p-4">
+                <img src="../assets/icons/deposit.svg" width="60">
+                <h5 class="text-center mt-3">Deposit</h5>
+                <h4 class="text-center mt-3">{{term.deposit}} ₺</h4>
+            </div>
+            <div class="col-md-3 text-center border p-4">
+                <img src="../assets/icons/km.svg" width="60">
+                <h5 class="text-center mt-3">Daily Mileage Limit</h5>
+                <h4 class="text-center mt-3">{{term.dailyKmLimit}} KM</h4>
+            </div>
+            <div class="col-md-3 text-center border p-4">
+                <img src="../assets/icons/fuse.svg" width="60">
+                <h5 class="text-center mt-3">Damage Insurance</h5>
+                <h4 class="text-center mt-3">{{term.fuse}}</h4>
+            </div>
+        </div>
+
+        <h5 class="mt-4">Driver Requirements</h5>
+        <hr>
+        <div class="row d-flex justify-content-around" *ngFor="let term of rentalTerms">
+            <div class="col-md-3 text-center border p-4">
+                <img src="../assets/icons/drivercard.svg" width="60">
+                <h5 class="text-center mt-3">Minimum License Duration</h5>
+                <h4 class="text-center mt-3">{{term.driverLicenceLimit}}</h4>
+            </div>
+            <div class="col-md-3 text-center border p-4">
+                <img src="../assets/icons/age.svg" width="60">
+                <h5 class="text-center mt-3">Minimum Age</h5>
+                <h4 class="text-center mt-3">{{term.driverAge}}</h4>
+            </div>
+        </div>
+    </div>
+</div>

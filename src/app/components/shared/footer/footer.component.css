@@ -1,0 +1,51 @@
+.row{
+    margin:0;
+    padding:0;
+    background:#333;
+}
+.logo{
+    text-align:center;
+    font-size:40px;
+    color:#D23B38;
+    font-family: 'Pacifico', cursive;
+}
+a{
+    text-decoration: none;
+}
+
+h5{
+    font-size:18px;
+    color:#fff;
+}
+ul {
+    list-style-type: none;
+}
+ul li {
+    margin:4px 0;
+}
+.list-item a{
+    font-size:16px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:silver;
+}
+.list-hr{
+   border-bottom: 1px solid rgb(104, 102, 102);
+}
+.footer-top{
+    min-height:350px;
+}
+.footer-bottom{
+    min-height:100px;
+    background-color:#2A2A2A;
+}
+.copyright , .term{
+    font-size:15px;
+    color:silver;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media screen and (max-width:765px){
+    .col-md-3 , .col-md-6{
+        text-align:center;
+    }
+}

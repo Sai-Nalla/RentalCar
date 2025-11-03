@@ -1,0 +1,99 @@
+<app-status></app-status>
+<app-steps></app-steps>
+
+<div class="container-fluid mt-5">
+    <p-toast position="top-right"></p-toast>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-7 border" *ngFor="let detail of details">
+                    <span class="support mr-4 p-3">
+                        <i class="pi pi-star mr-1"></i>
+                        <div class="7-24">{{detail.findexScore}}</div>
+                    </span>
+                    <div class="detail-wrapper mt-3 mb-5">
+                        <h5>
+                            {{detail.brandName}} {{detail.carName}}
+                        </h5>
+                        <div class="free-cancel mt-3">
+                            <img src="../assets/icons/ok.png" width="22" style="margin-right:5px;"> FREE CANCELLATION
+                            GUARANTEE
+                        </div>
+                        <app-gallery></app-gallery>
+                    </div>
+                </div>
+                <div class="col-md-5 p-3 border">
+                    <div *ngFor="let property of carProperty" class="car-description">
+                        <div class="rent-title text-center">
+                            <h5>Car Features</h5>
+                        </div>
+                        <div class="car-property mt-4">
+                            <h5> <img src="../assets/icons/fuel.svg" width="36" alt=""> Fuel: {{property.fuelName}}</h5>
+                            <hr>
+                            <h5> <img src="../assets/icons/gear.svg" width="26" alt=""> Gear: {{property.gearName}}</h5>
+                            <hr>
+                            <h5> <img src="../assets/icons/carclass.svg" width="36" alt=""> Class: {{property.carClassName}}</h5>
+                            <hr>
+                            <div class="banner d-flex mt-5 justify-content-center">
+                                <img src="../assets/banner.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-rental-term></app-rental-term>
+        </div>
+
+        <div class="col-md-3 p-3 border">
+            <div class="rent-title">
+                <h5>Rental Details</h5>
+            </div>
+            <div class="rent-dailyprice-wrapper mt-5">
+                <div class="rent-dailyprice" *ngFor="let detail of details">
+                    <h5 class="salary-title">Daily Price</h5>
+                    <img src="../assets/icons/wallet.svg" width="26" alt=""> 
+                    <span class="ml-5 dailyprice">{{detail.dailyPrice }}₺</span>
+                    <hr>
+                    <h5 class="salary-title">{{rentDailyLength}} Days Ideal Price</h5>
+                    <img src="../assets/icons/wallet.svg" width="26" alt=""> 
+                    <span class="ml-5 dailyprice-rentdaily">{{detail.dailyPrice * rentDailyLength }}₺</span>
+                    <hr>
+                </div>
+
+                <div class="rentdate text-center">
+                    <h5 class="salary-title">Pick-up / Drop-off Date</h5>
+                    <p-calendar [(ngModel)]="rangeDates" (ngModelChange)="change($event)"
+                        (onSelect)="change(rangeDates)" [minDate]="minDate" [touchUI]="true" dateFormat="dd.mm.yy"
+                        [showIcon]="true" [showTime]="true" selectionMode="range" [readonlyInput]="true"
+                        inputId="range">
+                    </p-calendar>
+
+                    <div class="mt-3" *ngIf="returnDate">
+                        <div>
+                            <img src="../assets/rent.svg" width="50" class="text-danger"> {{rentDate | date:'d.MM.yyyy'}}
+                        </div>
+                        <div>
+                            <img src="../assets/return.svg" width="50" class="text-danger"> {{returnDate | date:'d.MM.yyyy'}}
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="rent-dailyprice" *ngIf="rentDailyLength">
+                    <div *ngFor="let detail of details">
+                        <div class="p-3"
+                            style="background:rgb(76, 175, 80); border:10px solid rgba(166, 207, 168, 0.74);">
+                            <h5 class="salary-title-card text-center">Amount to be Charged from Your Card (VAT Included)</h5>
+                            <div class="dailyprice-card text-center">{{detail.dailyPrice * rentDailyLength | vatAdded:0.20}}</div>
+                        </div>
+                        <hr>
+                        <button class="btn btn-red mt-2 col-md-12" *ngIf="!paymentButtonActive"
+                            (click)="getRentalDateCheck(carId,rentDate,returnDate)">Proceed to Next Step</button>
+                        <button *ngIf="paymentButtonActive" class="btn btn-success mt-2 col-md-12" routerLink="/login">Please Log In!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
